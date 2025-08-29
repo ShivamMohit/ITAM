@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
+import { SubscriptionProvider } from "../../contexts/SubscriptionContext";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import Navbar from "../../components/Navbar";
 import AlertsWidget from "../../components/AlertsWidget";
 import AlertsPanel from "../../components/AlertsPanel";
+import SubscriptionWidget from "../../components/SubscriptionWidget";
 import { hardwareAPI, softwareAPI, ticketsAPI, authAPI } from "../../lib/api";
 import toast from "react-hot-toast";
 
@@ -393,452 +395,466 @@ export default function DashboardPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
+      <SubscriptionProvider>
+        <div className="min-h-screen bg-gray-50">
+          <Navbar />
 
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900">
-                IT Asset Dashboard
-              </h1>
-              <p className="mt-2 text-gray-600">
-                Overview of all IT assets and system status
-              </p>
-            </div>
+          <div className="py-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Header */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900">
+                  IT Asset Dashboard
+                </h1>
+                <p className="mt-2 text-gray-600">
+                  Overview of all IT assets and system status
+                </p>
+              </div>
 
-            {/* Stats Cards - Hardware */}
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Hardware Assets
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div
-                  onClick={handleViewHardware}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Package className="h-6 w-6 text-white" />
+              {/* Stats Cards - Hardware */}
+              <div className="mb-10">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                  Hardware Assets
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div
+                    onClick={handleViewHardware}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <Package className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {dashboardStats?.totalAssets || 0}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Total Assets
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {dashboardStats?.totalAssets || 0}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Total Assets
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">
+                      All registered devices
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    All registered devices
-                  </p>
-                </div>
 
-                <div
-                  onClick={handleViewHardware}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <CheckCircle className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewHardware}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <CheckCircle className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {dashboardStats?.activeAssets || 0}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Active Assets
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {dashboardStats?.activeAssets || 0}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Active Assets
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">
+                      Currently active devices
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Currently active devices
-                  </p>
-                </div>
 
-                <div
-                  onClick={handleViewHardware}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <CheckCircle className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewHardware}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <CheckCircle className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {assignmentStats?.totalAssignedAssets || 0}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Assigned Assets
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {assignmentStats?.totalAssignedAssets || 0}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Assigned Assets
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">
+                      Currently assigned to users
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Currently assigned to users
-                  </p>
-                </div>
 
-                <div
-                  onClick={handleViewHardware}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <AlertCircle className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewHardware}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <AlertCircle className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {dashboardStats?.expiringWarranties || 0}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Expiring Warranties
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {dashboardStats?.expiringWarranties || 0}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Expiring Warranties
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">
+                      Warranties expiring soon
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Warranties expiring soon
-                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Stats Cards - Software */}
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Software Inventory
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div
-                  onClick={handleViewSoftware}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Monitor className="h-6 w-6 text-white" />
+              {/* Stats Cards - Software */}
+              <div className="mb-10">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                  Software Inventory
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div
+                    onClick={handleViewSoftware}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <Monitor className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {softwareStats.total}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Total Systems
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {softwareStats.total}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Total Systems
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">Scanned systems</p>
                   </div>
-                  <p className="text-xs text-gray-500">Scanned systems</p>
-                </div>
 
-                <div
-                  onClick={handleViewSoftware}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Package className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewSoftware}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <Package className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {softwareStats.totalPackages}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Software Packages
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {softwareStats.totalPackages}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Software Packages
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">Installed software</p>
                   </div>
-                  <p className="text-xs text-gray-500">Installed software</p>
-                </div>
 
-                <div
-                  onClick={handleViewSoftware}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Settings className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewSoftware}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <Settings className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {softwareStats.services}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Services
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {softwareStats.services}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Services
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">System services</p>
                   </div>
-                  <p className="text-xs text-gray-500">System services</p>
-                </div>
 
-                <div
-                  onClick={handleViewSoftware}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Play className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewSoftware}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <Play className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {softwareStats.startupPrograms}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Startup Programs
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {softwareStats.startupPrograms}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Startup Programs
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">Auto-start programs</p>
                   </div>
-                  <p className="text-xs text-gray-500">Auto-start programs</p>
                 </div>
               </div>
-            </div>
 
-            {/* Stats Cards - Tickets */}
-            <div className="mb-10">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Support Tickets
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div
-                  onClick={handleViewTickets}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Ticket className="h-6 w-6 text-white" />
+              {/* Stats Cards - Tickets */}
+              <div className="mb-10">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                  Support Tickets
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div
+                    onClick={handleViewTickets}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <Ticket className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {ticketStats.total}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Total Tickets
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {ticketStats.total}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Total Tickets
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">
+                      All support requests
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-500">All support requests</p>
-                </div>
 
-                <div
-                  onClick={handleViewTickets}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <AlertCircle className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewTickets}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <AlertCircle className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {ticketStats.open}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Open
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {ticketStats.open}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">Open</p>
-                    </div>
+                    <p className="text-xs text-gray-500">Awaiting response</p>
                   </div>
-                  <p className="text-xs text-gray-500">Awaiting response</p>
-                </div>
 
-                <div
-                  onClick={handleViewTickets}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <CheckCircle className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewTickets}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <CheckCircle className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {ticketStats.resolved}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Resolved
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {ticketStats.resolved}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Resolved
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">
+                      Successfully completed
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Successfully completed
-                  </p>
-                </div>
 
-                <div
-                  onClick={handleViewTickets}
-                  className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <XCircle className="h-6 w-6 text-white" />
+                  <div
+                    onClick={handleViewTickets}
+                    className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <XCircle className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">
+                          {ticketStats.closed}
+                        </p>
+                        <p className="text-sm text-gray-600 font-medium">
+                          Closed
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {ticketStats.closed}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        Closed
-                      </p>
-                    </div>
+                    <p className="text-xs text-gray-500">Archived tickets</p>
                   </div>
-                  <p className="text-xs text-gray-500">Archived tickets</p>
                 </div>
               </div>
-            </div>
 
-            {/* Warranty Alerts Widget */}
-            <div className="mb-8">
-              <AlertsWidget onViewAll={handleViewAllAlerts} />
-            </div>
+              {/* Warranty Alerts Widget */}
+              <div className="mb-8">
+                <AlertsWidget onViewAll={handleViewAllAlerts} />
+              </div>
 
-            {/* Export Options Panel */}
-            <div className="mb-8">
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
-                  <Download className="h-5 w-5 text-blue-600 mr-2" />
-                  Export Options
-                </h3>
+              {/* Subscription Widget */}
+              <div className="mb-8">
+                <SubscriptionWidget />
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Hardware Exports */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-4 flex items-center">
-                      <Monitor className="h-4 w-4 text-blue-600 mr-2" />
-                      Hardware Assets
-                    </h4>
-                    <div className="space-y-3">
-                      <button
-                        onClick={() => handleHardwareExport("compliance")}
-                        disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-blue-50 rounded-lg transition-colors border border-gray-200 hover:border-blue-300"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="font-medium">
-                              🛡️ Compliance Report
+              {/* Export Options Panel */}
+              <div className="mb-8">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+                    <Download className="h-5 w-5 text-blue-600 mr-2" />
+                    Export Options
+                  </h3>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Hardware Exports */}
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-700 mb-4 flex items-center">
+                        <Monitor className="h-4 w-4 text-blue-600 mr-2" />
+                        Hardware Assets
+                      </h4>
+                      <div className="space-y-3">
+                        <button
+                          onClick={() => handleHardwareExport("compliance")}
+                          disabled={exportLoading}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-blue-50 rounded-lg transition-colors border border-gray-200 hover:border-blue-300"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium">
+                                🛡️ Compliance Report
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">
+                                Full asset details for regulatory compliance
+                              </div>
                             </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              Full asset details for regulatory compliance
-                            </div>
+                            <FileText className="h-4 w-4 text-blue-600" />
                           </div>
-                          <FileText className="h-4 w-4 text-blue-600" />
-                        </div>
-                      </button>
+                        </button>
 
-                      <button
-                        onClick={() => handleHardwareExport("security")}
-                        disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-green-50 rounded-lg transition-colors border border-gray-200 hover:border-green-300"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="font-medium">
-                              🔒 Security Assessment
+                        <button
+                          onClick={() => handleHardwareExport("security")}
+                          disabled={exportLoading}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-green-50 rounded-lg transition-colors border border-gray-200 hover:border-green-300"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium">
+                                🔒 Security Assessment
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">
+                                Security status and vulnerability analysis
+                              </div>
                             </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              Security status and vulnerability analysis
-                            </div>
+                            <Shield className="h-4 w-4 text-green-600" />
                           </div>
-                          <Shield className="h-4 w-4 text-green-600" />
-                        </div>
-                      </button>
+                        </button>
 
-                      <button
-                        onClick={() => handleHardwareExport("inventory")}
-                        disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-purple-50 rounded-lg transition-colors border border-gray-200 hover:border-purple-300"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="font-medium">
-                              📋 Basic Inventory
+                        <button
+                          onClick={() => handleHardwareExport("inventory")}
+                          disabled={exportLoading}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-purple-50 rounded-lg transition-colors border border-gray-200 hover:border-purple-300"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium">
+                                📋 Basic Inventory
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">
+                                Essential asset information
+                              </div>
                             </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              Essential asset information
-                            </div>
+                            <Download className="h-4 w-4 text-purple-600" />
                           </div>
-                          <Download className="h-4 w-4 text-purple-600" />
-                        </div>
-                      </button>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Software Exports */}
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-700 mb-4 flex items-center">
+                        <Package className="h-4 w-4 text-green-600 mr-2" />
+                        Software Inventory
+                      </h4>
+                      <div className="space-y-3">
+                        <button
+                          onClick={() => handleSoftwareExport("compliance")}
+                          disabled={exportLoading}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-blue-50 rounded-lg transition-colors border border-gray-200 hover:border-blue-300"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium">
+                                📊 License Compliance
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">
+                                Software licensing and compliance status
+                              </div>
+                            </div>
+                            <FileText className="h-4 w-4 text-blue-600" />
+                          </div>
+                        </button>
+
+                        <button
+                          onClick={() => handleSoftwareExport("security")}
+                          disabled={exportLoading}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-green-50 rounded-lg transition-colors border border-gray-200 hover:border-green-300"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium">
+                                🔍 Security Analysis
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">
+                                Security updates and vulnerability status
+                              </div>
+                            </div>
+                            <Shield className="h-4 w-4 text-green-600" />
+                          </div>
+                        </button>
+
+                        <button
+                          onClick={() => handleSoftwareExport("inventory")}
+                          disabled={exportLoading}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-purple-50 rounded-lg transition-colors border border-gray-200 hover:border-purple-300"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium">
+                                📦 Software Catalog
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">
+                                Installed software inventory
+                              </div>
+                            </div>
+                            <Download className="h-4 w-4 text-purple-600" />
+                          </div>
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Software Exports */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-4 flex items-center">
-                      <Package className="h-4 w-4 text-green-600 mr-2" />
-                      Software Inventory
-                    </h4>
-                    <div className="space-y-3">
-                      <button
-                        onClick={() => handleSoftwareExport("compliance")}
-                        disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-blue-50 rounded-lg transition-colors border border-gray-200 hover:border-blue-300"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="font-medium">
-                              📊 License Compliance
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              Software licensing and compliance status
-                            </div>
-                          </div>
-                          <FileText className="h-4 w-4 text-blue-600" />
-                        </div>
-                      </button>
-
-                      <button
-                        onClick={() => handleSoftwareExport("security")}
-                        disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-green-50 rounded-lg transition-colors border border-gray-200 hover:border-green-300"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="font-medium">
-                              🔍 Security Analysis
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              Security updates and vulnerability status
-                            </div>
-                          </div>
-                          <Shield className="h-4 w-4 text-green-600" />
-                        </div>
-                      </button>
-
-                      <button
-                        onClick={() => handleSoftwareExport("inventory")}
-                        disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-purple-50 rounded-lg transition-colors border border-gray-200 hover:border-purple-300"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="font-medium">
-                              📦 Software Catalog
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              Installed software inventory
-                            </div>
-                          </div>
-                          <Download className="h-4 w-4 text-purple-600" />
-                        </div>
-                      </button>
+                  {exportLoading && (
+                    <div className="mt-6 text-center">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                      <p className="text-sm text-gray-600">
+                        Preparing export...
+                      </p>
                     </div>
-                  </div>
-                </div>
+                  )}
 
-                {exportLoading && (
-                  <div className="mt-6 text-center">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                    <p className="text-sm text-gray-600">Preparing export...</p>
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <p className="text-xs text-gray-500 text-center">
+                      All exports include comprehensive data required for
+                      banking compliance, regulatory audits, and security
+                      assessments.
+                    </p>
                   </div>
-                )}
-
-                <div className="mt-6 pt-4 border-t border-gray-200">
-                  <p className="text-xs text-gray-500 text-center">
-                    All exports include comprehensive data required for banking
-                    compliance, regulatory audits, and security assessments.
-                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </SubscriptionProvider>
     </ProtectedRoute>
   );
 }

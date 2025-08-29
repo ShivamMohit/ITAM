@@ -116,6 +116,11 @@ const HardwareSchema = new mongoose.Schema(
   {
     // System Information
     _id: String,
+    organization: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: true,
+    },
     system: {
       platform: { type: String, required: true },
       platform_release: { type: String, default: "Unknown" },

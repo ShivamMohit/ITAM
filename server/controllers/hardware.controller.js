@@ -11,7 +11,7 @@ export const getAll = async (req, res) => {
     const search = req.query.search;
     const filter = req.query.filter;
 
-    let query = {};
+    let query = { organization: req.user.organization }; // Filter by organization
     let totalCount = 0;
 
     // Build search query - optimize for performance
@@ -839,22 +839,22 @@ export const createManualAsset = async (req, res) => {
     });
   } catch (error) {
     console.error("Create manual asset error:", error);
-    
+
     // Handle validation errors specifically
-    if (error.name === 'ValidationError') {
+    if (error.name === "ValidationError") {
       return res.status(400).json({
         error: "Validation error",
-        details: Object.values(error.errors).map(err => err.message)
+        details: Object.values(error.errors).map((err) => err.message),
       });
     }
-    
+
     // Handle duplicate key errors
     if (error.code === 11000) {
       return res.status(409).json({
-        error: "Asset with this MAC address already exists"
+        error: "Asset with this MAC address already exists",
       });
     }
-    
+
     res.status(500).json({
       error: "Failed to create manual asset entry",
       details: error.message,
@@ -1207,7 +1207,8 @@ export const importCsvAssets = async (req, res) => {
         // Check if asset already exists
         const existingAsset = await Hardware.findById(macAddress);
         if (existingAsset) {
-          results.push({ // Changed from results.errors.push to results.push
+          results.push({
+            // Changed from results.errors.push to results.push
             row: rowNumber,
             message: `Asset with MAC address ${macAddress} already exists`,
           });
@@ -1221,7 +1222,8 @@ export const importCsvAssets = async (req, res) => {
         await newAsset.save();
 
         successCount++;
-        results.push({ // Changed from results.importedAssets.push to results.push
+        results.push({
+          // Changed from results.importedAssets.push to results.push
           assetId,
           assetName: fullAssetName,
           macAddress,
@@ -1233,7 +1235,8 @@ export const importCsvAssets = async (req, res) => {
         // );
       } catch (error) {
         console.error(`Error processing row ${rowNumber}:`, error);
-        results.push({ // Changed from results.errors.push to results.push
+        results.push({
+          // Changed from results.errors.push to results.push
           row: rowNumber,
           message: `Error processing row: ${error.message}`,
         });

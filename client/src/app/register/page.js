@@ -5,11 +5,15 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../contexts/AuthContext";
 import Link from "next/link";
-import { Eye, EyeOff, UserPlus } from "lucide-react";
+import { Eye, EyeOff, UserPlus, Building, Plus } from "lucide-react";
+import organizationService from "../../lib/organizationService";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [organizations, setOrganizations] = useState([]);
+  const [loadingOrganizations, setLoadingOrganizations] = useState(false);
+  const [showNewOrgForm, setShowNewOrgForm] = useState(false);
   const { register: registerUser, isAuthenticated, loading, user } = useAuth();
   const router = useRouter();
   const {
@@ -39,6 +43,25 @@ export default function RegisterPage() {
       }
     }
   }, [isAuthenticated, loading, router, user]);
+
+  // Load available organizations
+  useEffect(() => {
+    const loadOrganizations = async () => {
+      try {
+        setLoadingOrganizations(true);
+        const response = await organizationService.getAvailableOrganizations();
+        setOrganizations(response.organizations || []);
+      } catch (error) {
+        console.error("Failed to load organizations:", error);
+        // Don't show error to user, just use empty list
+        setOrganizations([]);
+      } finally {
+        setLoadingOrganizations(false);
+      }
+    };
+
+    loadOrganizations();
+  }, []);
 
   const onSubmit = async (data) => {
     const result = await registerUser(data);
@@ -273,6 +296,117 @@ export default function RegisterPage() {
                 <p className="mt-1 text-sm text-red-600">
                   {errors.email.message}
                 </p>
+              )}
+            </div>
+
+            {/* Organization Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Organization
+              </label>
+
+              {loadingOrganizations ? (
+                <div className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50">
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-400 border-t-transparent mr-2"></div>
+                    Loading organizations...
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {/* Existing Organizations */}
+                  {organizations.length > 0 && (
+                    <div>
+                      <label className="text-sm text-gray-600 mb-2 block">
+                        Join existing organization:
+                      </label>
+                      <select
+                        {...register("organizationId")}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-colors text-gray-900"
+                        onChange={(e) => {
+                          if (e.target.value === "new") {
+                            setShowNewOrgForm(true);
+                          } else {
+                            setShowNewOrgForm(false);
+                          }
+                        }}
+                      >
+                        <option value="">Select an organization...</option>
+                        {organizations.map((org) => (
+                          <option key={org.id} value={org.id}>
+                            {org.name} ({org.domain}) - {org.plan} plan
+                          </option>
+                        ))}
+                        <option value="new">+ Create new organization</option>
+                      </select>
+                    </div>
+                  )}
+
+                  {/* New Organization Form */}
+                  {showNewOrgForm && (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <div className="flex items-center mb-3">
+                        <Plus className="h-5 w-5 text-blue-600 mr-2" />
+                        <h3 className="font-medium text-blue-900">
+                          Create New Organization
+                        </h3>
+                      </div>
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-sm font-medium text-blue-800 mb-1">
+                            Organization Name
+                          </label>
+                          <input
+                            {...register("newOrgName", {
+                              required: showNewOrgForm
+                                ? "Organization name is required"
+                                : false,
+                            })}
+                            type="text"
+                            className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                            placeholder="Enter organization name"
+                          />
+                          {errors.newOrgName && (
+                            <p className="mt-1 text-sm text-red-600">
+                              {errors.newOrgName.message}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-blue-800 mb-1">
+                            Domain (optional)
+                          </label>
+                          <input
+                            {...register("newOrgDomain")}
+                            type="text"
+                            className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                            placeholder="e.g., mycompany.com"
+                          />
+                          <p className="text-xs text-blue-600 mt-1">
+                            Users with this email domain will automatically join
+                            this organization
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Auto-organization info */}
+                  {!showNewOrgForm && organizations.length === 0 && (
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <div className="flex items-center mb-2">
+                        <Building className="h-5 w-5 text-gray-600 mr-2" />
+                        <span className="text-sm font-medium text-gray-700">
+                          Automatic Organization
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600">
+                        A new organization will be created automatically based
+                        on your email domain.
+                      </p>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
 

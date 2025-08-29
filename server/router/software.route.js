@@ -14,6 +14,10 @@ import {
   requireAdmin,
   canAccessAsset,
 } from "../middleware/auth.js";
+import {
+  checkSubscriptionLimits,
+  addOrganizationContext,
+} from "../middleware/organization.js";
 
 const router = express.Router();
 
@@ -21,7 +25,13 @@ const router = express.Router();
 router.post("/", createOrUpdateSoftware);
 
 // Protected routes - require authentication
-router.get("/", verifyToken, getAll);
+router.get(
+  "/",
+  verifyToken,
+  addOrganizationContext,
+  checkSubscriptionLimits,
+  getAll
+);
 
 // Admin-only routes must come before the :id route to avoid conflicts
 router.get(
@@ -44,4 +54,3 @@ router.get("/:id", verifyToken, canAccessAsset, getById);
 router.delete("/:id", verifyToken, requireAdmin, deleteSoftware);
 
 export default router;
-

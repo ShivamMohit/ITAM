@@ -13,13 +13,35 @@ import {
   closeTicket,
 } from "../controllers/ticket.controller.js";
 import { verifyToken, requireAdmin } from "../middleware/auth.js";
+import {
+  checkSubscriptionLimits,
+  addOrganizationContext,
+} from "../middleware/organization.js";
 
 const router = express.Router();
 
 // Public routes (with authentication)
-router.get("/user-assets", verifyToken, getUserAssets);
-router.post("/", verifyToken, createTicket);
-router.get("/", verifyToken, getAllTickets);
+router.get(
+  "/user-assets",
+  verifyToken,
+  addOrganizationContext,
+  checkSubscriptionLimits,
+  getUserAssets
+);
+router.post(
+  "/",
+  verifyToken,
+  addOrganizationContext,
+  checkSubscriptionLimits,
+  createTicket
+);
+router.get(
+  "/",
+  verifyToken,
+  addOrganizationContext,
+  checkSubscriptionLimits,
+  getAllTickets
+);
 
 // Admin routes must come before the :id routes to avoid conflicts
 router.get("/admin/statistics", verifyToken, requireAdmin, getTicketStatistics);

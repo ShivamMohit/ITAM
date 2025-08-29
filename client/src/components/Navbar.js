@@ -2,7 +2,17 @@
 
 import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
-import { LogOut, User, Settings, Shield, Menu, X } from "lucide-react";
+import {
+  LogOut,
+  User,
+  Settings,
+  Shield,
+  Menu,
+  X,
+  CreditCard,
+  BarChart3,
+  Building,
+} from "lucide-react";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -19,10 +29,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center min-w-0">
-            <Link 
-              href="/" 
-              className="flex-shrink-0 flex items-center"
-            >
+            <Link href="/" className="flex-shrink-0 flex items-center">
               <div className="h-8 w-8 bg-gray-900 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">IT</span>
               </div>
@@ -33,10 +40,27 @@ const Navbar = () => {
                 ITAM
               </span>
             </Link>
-            
+
             {/* Main Navigation Links */}
             <div className="hidden md:flex items-center space-x-6 ml-8">
-              {/* Navigation links can be added here in the future */}
+              <Link
+                href="/dashboard"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/my-assets"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+              >
+                My Assets
+              </Link>
+              <Link
+                href="/patches"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Software
+              </Link>
             </div>
           </div>
 
@@ -99,6 +123,33 @@ const Navbar = () => {
                     Profile Settings
                   </Link>
 
+                  <Link
+                    href="/subscription"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <CreditCard className="h-4 w-4 mr-2" />
+                    Pricing Plans
+                  </Link>
+
+                  <Link
+                    href="/subscription/dashboard"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Subscription Dashboard
+                  </Link>
+
+                  <Link
+                    href="/organization"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <Building className="h-4 w-4 mr-2" />
+                    Organization
+                  </Link>
+
                   {user?.role === "admin" && (
                     <Link
                       href="/admin"
@@ -126,14 +177,63 @@ const Navbar = () => {
           </div>
         </div>
 
-                 {/* Mobile Navigation Menu */}
-         {isMobileMenuOpen && (
-           <div className="md:hidden">
-             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
-               {/* Mobile navigation links can be added here in the future */}
-             </div>
-           </div>
-         )}
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
+              <Link
+                href="/dashboard"
+                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/my-assets"
+                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                My Assets
+              </Link>
+              <Link
+                href="/patches"
+                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Software
+              </Link>
+              <div className="border-t border-gray-200 pt-4 mt-4">
+                <h3 className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  Subscription
+                </h3>
+                <Link
+                  href="/subscription"
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <CreditCard className="h-4 w-4 inline mr-2" />
+                  Pricing Plans
+                </Link>
+                <Link
+                  href="/subscription/dashboard"
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <BarChart3 className="h-4 w-4 inline mr-2" />
+                  Subscription Dashboard
+                </Link>
+                <Link
+                  href="/organization"
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Building className="h-4 w-4 inline mr-2" />
+                  Organization
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

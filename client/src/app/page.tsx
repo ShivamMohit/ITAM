@@ -116,6 +116,12 @@ export default function HomePage() {
                 Sign In
               </Link>
               <Link
+                href="/login"
+                className="text-gray-600 hover:text-gray-900 text-sm font-medium transition-all duration-200 hover:scale-105"
+              >
+                Subscription
+              </Link>
+              <Link
                 href="/register"
                 className="group relative inline-flex items-center px-6 py-2.5 bg-gradient-to-r from-gray-900 to-black text-white rounded-xl text-sm font-medium hover:from-black hover:to-gray-900 transition-all duration-300 hover:scale-105 hover:shadow-lg overflow-hidden"
               >

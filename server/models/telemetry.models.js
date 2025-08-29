@@ -95,6 +95,11 @@ const TelemetrySchema = new mongoose.Schema(
       index: true,
       ref: "Hardware",
     },
+    organization: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: true,
+    },
     current_data: TelemetryDataSchema,
     historical_data: [TelemetryDataSchema],
     health_analysis: HealthAnalysisSchema,
@@ -207,4 +212,3 @@ TelemetrySchema.methods.getHealthTrends = function (hours = 24) {
 const Telemetry = mongoose.model("Telemetry", TelemetrySchema);
 
 export default Telemetry;
-

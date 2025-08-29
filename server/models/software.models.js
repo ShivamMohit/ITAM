@@ -47,6 +47,11 @@ const SoftwareSchema = new mongoose.Schema(
   {
     // Use MAC address as the primary key to link with hardware
     _id: { type: String, required: true }, // MAC address
+    organization: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: true,
+    },
 
     // System Information (linked to hardware)
     system: {
@@ -211,4 +216,3 @@ SoftwareSchema.set("toObject", { virtuals: true });
 
 const Software = mongoose.model("Software", SoftwareSchema);
 export default Software;
-

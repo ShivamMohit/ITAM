@@ -7,6 +7,11 @@ const TicketSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
+    organization: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: true,
+    },
     title: {
       type: String,
       required: true,

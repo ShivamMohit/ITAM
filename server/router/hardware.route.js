@@ -21,6 +21,10 @@ import {
   canAccessAsset,
   requireAdmin,
 } from "../middleware/auth.js";
+import {
+  checkSubscriptionLimits,
+  addOrganizationContext,
+} from "../middleware/organization.js";
 
 // Configure multer for file uploads
 const upload = multer({
@@ -40,10 +44,22 @@ const upload = multer({
 const router = express.Router();
 
 // GET route to fetch all hardware data (protected)
-router.get("/", verifyToken, getAll);
+router.get(
+  "/",
+  verifyToken,
+  addOrganizationContext,
+  checkSubscriptionLimits,
+  getAll
+);
 
 // GET route to fetch dashboard statistics (protected)
-router.get("/stats", verifyToken, getDashboardStats);
+router.get(
+  "/stats",
+  verifyToken,
+  addOrganizationContext,
+  checkSubscriptionLimits,
+  getDashboardStats
+);
 
 // Admin routes must come before the :id route to avoid conflicts
 // GET route to fetch assets with expiring warranties (protected)
@@ -76,13 +92,22 @@ router.get("/admin/unassigned", verifyToken, requireAdmin, getUnassignedAssets);
 router.post("/", createHardware);
 
 // POST route to create manual asset entry (admin only)
-router.post("/manual", verifyToken, requireAdmin, createManualAsset);
+router.post(
+  "/manual",
+  verifyToken,
+  requireAdmin,
+  addOrganizationContext,
+  checkSubscriptionLimits,
+  createManualAsset
+);
 
 // POST route to import CSV assets (admin only)
 router.post(
   "/import/csv",
   verifyToken,
   requireAdmin,
+  addOrganizationContext,
+  checkSubscriptionLimits,
   upload.single("csvFile"),
   importCsvAssets
 );
@@ -94,7 +119,12 @@ router.get("/:id", verifyToken, canAccessAsset, getById);
 router.put("/:id/asset-info", verifyToken, requireAdmin, updateAssetInfo);
 
 // PUT route to update asset information for user's own assets
-router.put("/:id/user-asset-info", verifyToken, canAccessAsset, updateUserAssetInfo);
+router.put(
+  "/:id/user-asset-info",
+  verifyToken,
+  canAccessAsset,
+  updateUserAssetInfo
+);
 
 // PUT route to update component warranty information (admin only)
 router.put(

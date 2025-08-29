@@ -1,4 +1,5 @@
 import User from "../models/user.models.js";
+import Organization from "../models/organization.models.js";
 import { generateToken } from "../middleware/auth.js";
 
 // Register new user
@@ -6,6 +7,8 @@ export const register = async (req, res) => {
   try {
     const { username, email, password, firstName, lastName, department, role } =
       req.body;
+
+    let { organizationId } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({
@@ -18,6 +21,92 @@ export const register = async (req, res) => {
       });
     }
 
+    // Handle organization assignment
+    if (!organizationId) {
+      // Check if user wants to create a new organization
+      const { newOrgName, newOrgDomain } = req.body;
+
+      if (newOrgName) {
+        // Create new organization with provided details
+        const domain = newOrgDomain || email.split("@")[1];
+
+        const organization = new Organization({
+          name: newOrgName,
+          domain: domain,
+          subscription: {
+            plan: "free",
+            status: "active",
+            startDate: new Date(),
+            endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days trial
+            maxAssets: 10,
+            features: ["basic_scanning"],
+            stripeCustomerId: null,
+            stripeSubscriptionId: null,
+            stripePriceId: null,
+            currentPeriodStart: new Date(),
+            currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            cancelAtPeriodEnd: false,
+          },
+          settings: {
+            allowUserRegistration: true,
+            requireEmailVerification: false,
+          },
+          isActive: true,
+        });
+
+        await organization.save();
+        console.log(
+          `Created new organization: ${organization.name} for domain: ${domain}`
+        );
+        organizationId = organization._id;
+      } else {
+        // Auto-create organization based on email domain
+        const emailDomain = email.split("@")[1];
+
+        // Try to find existing organization by domain
+        let organization = await Organization.findOne({
+          domain: emailDomain,
+        });
+
+        if (!organization) {
+          // Create new organization for this domain
+          organization = new Organization({
+            name: `${
+              emailDomain.split(".")[0].charAt(0).toUpperCase() +
+              emailDomain.split(".")[0].slice(1)
+            } Organization`,
+            domain: emailDomain,
+            subscription: {
+              plan: "free",
+              status: "active",
+              startDate: new Date(),
+              endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days trial
+              maxAssets: 10,
+              features: ["basic_scanning"],
+              stripeCustomerId: null,
+              stripeSubscriptionId: null,
+              stripePriceId: null,
+              currentPeriodStart: new Date(),
+              currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+              cancelAtPeriodEnd: false,
+            },
+            settings: {
+              allowUserRegistration: true,
+              requireEmailVerification: false,
+            },
+            isActive: true,
+          });
+
+          await organization.save();
+          console.log(
+            `Created new organization: ${organization.name} for domain: ${emailDomain}`
+          );
+        }
+
+        organizationId = organization._id;
+      }
+    }
+
     // Create new user
     const user = new User({
       username,
@@ -27,6 +116,7 @@ export const register = async (req, res) => {
       lastName,
       department,
       role: role || "user", // Default to user, only admin can create admin accounts
+      organization: organizationId, // Add organization reference
     });
 
     await user.save();
@@ -44,6 +134,7 @@ export const register = async (req, res) => {
       fullName: user.fullName,
       department: user.department,
       role: user.role,
+      organization: user.organization,
       assignedAssets: user.assignedAssets,
       createdAt: user.createdAt,
     };
@@ -96,6 +187,7 @@ export const login = async (req, res) => {
       fullName: user.fullName,
       department: user.department,
       role: user.role,
+      organization: user.organization,
       assignedAssets: user.assignedAssets,
       createdAt: user.createdAt,
     };

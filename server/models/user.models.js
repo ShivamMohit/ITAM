@@ -42,6 +42,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    organization: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: true,
+    },
     assignedAssets: [
       {
         type: String, // MAC addresses of assigned hardware

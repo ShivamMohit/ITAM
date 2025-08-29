@@ -29,12 +29,13 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Token expired or invalid
-      Cookies.remove("token");
-      Cookies.remove("user");
-      window.location.href = "/login";
-    }
+    // Don't automatically redirect on 401 - let components handle it
+    // if (error.response?.status === 401) {
+    //   // Token expired or invalid
+    //   Cookies.remove("token");
+    //   Cookies.remove("user");
+    //   window.location.href = "/login";
+    // }
     return Promise.reject(error);
   }
 );
@@ -75,7 +76,12 @@ export const hardwareAPI = {
       componentIndex,
       warrantyInfo,
     }),
-  updateUserComponentWarranty: (id, componentType, componentIndex, warrantyInfo) =>
+  updateUserComponentWarranty: (
+    id,
+    componentType,
+    componentIndex,
+    warrantyInfo
+  ) =>
     api.put(`/hardware/${id}/user-component-warranty`, {
       componentType,
       componentIndex,
@@ -105,7 +111,10 @@ export const softwareAPI = {
 
 // Alerts API calls
 export const alertsAPI = {
-  getWarrantyAlerts: (days = 30, page = 1, limit = 20, filter = "all") => api.get(`/alerts/warranty?days=${days}&page=${page}&limit=${limit}&filter=${filter}`),
+  getWarrantyAlerts: (days = 30, page = 1, limit = 20, filter = "all") =>
+    api.get(
+      `/alerts/warranty?days=${days}&page=${page}&limit=${limit}&filter=${filter}`
+    ),
   getStatistics: () => api.get("/alerts/statistics"),
 };
 

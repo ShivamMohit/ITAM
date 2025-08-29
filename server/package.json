@@ -10,7 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "setup": "node scripts/createAdmin.js"
+    "setup": "node scripts/createAdmin.js",
+    "setup-orgs": "node scripts/setupOrganizations.js",
+    "setup-stripe": "node scripts/setupStripe.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -20,6 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.1",
     "multer": "^2.0.2",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "stripe": "^14.21.0"
   }
 }

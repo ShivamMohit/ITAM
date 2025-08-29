@@ -8,6 +8,9 @@ import softwarerouter from "./router/software.route.js";
 import alertsrouter from "./router/alerts.route.js";
 import ticketrouter from "./router/ticket.route.js";
 import telemetryrouter from "./router/telemetry.route.js";
+import organizationrouter from "./router/organization.route.js";
+import subscriptionrouter from "./router/subscription.route.js";
+import webhookrouter from "./router/webhook.route.js";
 
 const app = express();
 configDotenv();
@@ -28,6 +31,9 @@ app.use("/api/software", softwarerouter);
 app.use("/api/alerts", alertsrouter);
 app.use("/api/tickets", ticketrouter);
 app.use("/api/telemetry", telemetryrouter);
+app.use("/api/organization", organizationrouter);
+app.use("/api/subscription", subscriptionrouter);
+app.use("/api/webhook", webhookrouter);
 
 // 404 handler for undefined routes
 app.use("*", (req, res) => {
@@ -41,8 +47,7 @@ app.use((error, req, res, next) => {
   res.status(500).json({ error: "Internal server error" });
 });
 // MongoDB connection URI
-const mongoUri =  process.env.MONGODB_URI;
-
+const mongoUri = process.env.MONGODB_URI;
 
 // Connect to MongoDB
 mongoose
