@@ -23,7 +23,7 @@ except ImportError:
 # Tenant configuration - these will be set by the download system
 TENANT_ID = os.getenv('TENANT_ID', 'default')
 API_TOKEN = os.getenv('API_TOKEN', '')
-API_BASE_URL = os.getenv('API_BASE_URL', 'https://itam-328j.onrender.com/api')
+API_BASE_URL = 'https://itam-328j.onrender.com/api'
 
 # Check if psutil is available
 try:
