@@ -150,7 +150,7 @@ export const downloadScanner = async (req, res) => {
       department: user.department,
       role: user.role,
     });
-    const apiBaseUrl = process.env.API_BASE_URL || "http://localhost:3000/api";
+    const apiBaseUrl = process.env.API_BASE_URL || "https://itam-328j.onrender.com/api";
 
     // Create temporary directory for scanner files
     const tempDir = path.join(
@@ -391,7 +391,7 @@ import requests
 # Configuration - will be read from config.env file or environment variables
 TENANT_ID = os.getenv('TENANT_ID', 'default')
 API_TOKEN = os.getenv('API_TOKEN', '')
-API_BASE_URL = os.getenv('API_BASE_URL', 'http://localhost:3000/api')
+API_BASE_URL = os.getenv('API_BASE_URL', 'https://itam-328j.onrender.com/api')
 
 # Try to load configuration from config.env file
 config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.env')
@@ -406,7 +406,7 @@ if os.path.exists(config_file):
     # Re-read environment variables after loading config file
     TENANT_ID = os.getenv('TENANT_ID', 'default')
     API_TOKEN = os.getenv('API_TOKEN', '')
-    API_BASE_URL = os.getenv('API_BASE_URL', 'http://localhost:3000/api')
+    API_BASE_URL = os.getenv('API_BASE_URL', 'https://itam-328j.onrender.com/api')
 
 # Add current directory to path to import local modules
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
