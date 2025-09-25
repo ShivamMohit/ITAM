@@ -10,7 +10,7 @@ import random
 import math
 from datetime import datetime, timedelta
 
-API_URL = "http://localhost:3000/api/telemetry"
+API_URL = "https://itam-328j.onrender.com/api/telemetry"
 
 def get_mac_address():
     """Get a consistent MAC address for testing"""

@@ -24,7 +24,7 @@ def create_config_env():
 # Copy this file and update with your actual values
 
 # API Configuration
-API_BASE_URL=http://localhost:3000/api
+API_BASE_URL=https://itam-328j.onrender.com/api
 API_TOKEN=your_api_token_here
 TENANT_ID=default
 

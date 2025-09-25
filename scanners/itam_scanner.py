@@ -17,7 +17,7 @@ import requests
 # Tenant configuration - these will be set by the download system
 TENANT_ID = os.getenv('TENANT_ID', 'default')
 API_TOKEN = os.getenv('API_TOKEN', '')
-API_BASE_URL = os.getenv('API_BASE_URL', 'http://localhost:3000/api')
+API_BASE_URL = os.getenv('API_BASE_URL', 'https://itam-328j.onrender.com/api')
 
 # Try to load configuration from config.env file
 # Check multiple possible locations for config.env
@@ -43,7 +43,7 @@ for config_file in config_locations:
             # Re-read environment variables after loading config file
             TENANT_ID = os.getenv('TENANT_ID', 'default')
             API_TOKEN = os.getenv('API_TOKEN', '')
-            API_BASE_URL = os.getenv('API_BASE_URL', 'http://localhost:3000/api')
+            API_BASE_URL = os.getenv('API_BASE_URL', 'https://itam-328j.onrender.com/api')
             config_loaded = True
             print(f"Configuration loaded successfully. Tenant ID: {TENANT_ID}")
             break
