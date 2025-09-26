@@ -402,10 +402,10 @@ export default function DashboardPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 IT Asset Dashboard
               </h1>
-              <p className="mt-2 text-gray-600">
+              <p className="mt-2 text-sm sm:text-base text-gray-600">
                 Overview of all IT assets and system status
               </p>
             </div>
@@ -421,14 +421,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <Package className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {dashboardStats?.totalAssets || 0}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Total Assets
                       </p>
                     </div>
@@ -443,14 +443,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <CheckCircle className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {dashboardStats?.activeAssets || 0}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Active Assets
                       </p>
                     </div>
@@ -465,14 +465,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <CheckCircle className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {assignmentStats?.totalAssignedAssets || 0}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Assigned Assets
                       </p>
                     </div>
@@ -487,14 +487,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <AlertCircle className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {dashboardStats?.expiringWarranties || 0}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Expiring Warranties
                       </p>
                     </div>
@@ -517,14 +517,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <Monitor className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {softwareStats.total}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Total Systems
                       </p>
                     </div>
@@ -537,14 +537,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <Package className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {softwareStats.totalPackages}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Software Packages
                       </p>
                     </div>
@@ -557,14 +557,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <Settings className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {softwareStats.services}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Services
                       </p>
                     </div>
@@ -577,14 +577,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <Play className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {softwareStats.startupPrograms}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Startup Programs
                       </p>
                     </div>
@@ -605,14 +605,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <Ticket className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {ticketStats.total}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Total Tickets
                       </p>
                     </div>
@@ -625,14 +625,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <AlertCircle className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {ticketStats.open}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">Open</p>
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">Open</p>
                     </div>
                   </div>
                   <p className="text-xs text-gray-500">Awaiting response</p>
@@ -643,14 +643,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <CheckCircle className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {ticketStats.resolved}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Resolved
                       </p>
                     </div>
@@ -665,14 +665,14 @@ export default function DashboardPage() {
                   className="p-6 rounded-3xl border border-gray-200 hover:border-gray-300 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white hover:bg-gray-50 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center shadow-lg">
                       <XCircle className="h-6 w-6 text-white" />
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-lg sm:text-2xl font-bold text-gray-900">
                         {ticketStats.closed}
                       </p>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm sm:text-base text-gray-600 font-medium">
                         Closed
                       </p>
                     </div>
@@ -695,7 +695,7 @@ export default function DashboardPage() {
                   Export Options
                 </h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                   {/* Hardware Exports */}
                   <div>
                     <h4 className="text-sm font-semibold text-gray-700 mb-4 flex items-center">
@@ -706,7 +706,7 @@ export default function DashboardPage() {
                       <button
                         onClick={() => handleHardwareExport("compliance")}
                         disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-blue-50 rounded-lg transition-colors border border-gray-200 hover:border-blue-300"
+                        className="w-full text-left px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-blue-50 rounded-lg transition-colors border border-gray-200 hover:border-blue-300"
                       >
                         <div className="flex items-center justify-between">
                           <div>
@@ -724,7 +724,7 @@ export default function DashboardPage() {
                       <button
                         onClick={() => handleHardwareExport("security")}
                         disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-green-50 rounded-lg transition-colors border border-gray-200 hover:border-green-300"
+                        className="w-full text-left px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-green-50 rounded-lg transition-colors border border-gray-200 hover:border-green-300"
                       >
                         <div className="flex items-center justify-between">
                           <div>
@@ -742,7 +742,7 @@ export default function DashboardPage() {
                       <button
                         onClick={() => handleHardwareExport("inventory")}
                         disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-purple-50 rounded-lg transition-colors border border-gray-200 hover:border-purple-300"
+                        className="w-full text-left px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-purple-50 rounded-lg transition-colors border border-gray-200 hover:border-purple-300"
                       >
                         <div className="flex items-center justify-between">
                           <div>
@@ -769,7 +769,7 @@ export default function DashboardPage() {
                       <button
                         onClick={() => handleSoftwareExport("compliance")}
                         disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-blue-50 rounded-lg transition-colors border border-gray-200 hover:border-blue-300"
+                        className="w-full text-left px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-blue-50 rounded-lg transition-colors border border-gray-200 hover:border-blue-300"
                       >
                         <div className="flex items-center justify-between">
                           <div>
@@ -787,7 +787,7 @@ export default function DashboardPage() {
                       <button
                         onClick={() => handleSoftwareExport("security")}
                         disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-green-50 rounded-lg transition-colors border border-gray-200 hover:border-green-300"
+                        className="w-full text-left px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-green-50 rounded-lg transition-colors border border-gray-200 hover:border-green-300"
                       >
                         <div className="flex items-center justify-between">
                           <div>
@@ -805,7 +805,7 @@ export default function DashboardPage() {
                       <button
                         onClick={() => handleSoftwareExport("inventory")}
                         disabled={exportLoading}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-purple-50 rounded-lg transition-colors border border-gray-200 hover:border-purple-300"
+                        className="w-full text-left px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-purple-50 rounded-lg transition-colors border border-gray-200 hover:border-purple-300"
                       >
                         <div className="flex items-center justify-between">
                           <div>

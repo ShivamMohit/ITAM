@@ -20,6 +20,7 @@ export default function HomePage() {
   const [isGRCModalOpen, setIsGRCModalOpen] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Set client-side flag to prevent hydration issues
@@ -69,8 +70,32 @@ export default function HomePage() {
         }}
       />
 
+      {/* Mobile Menu Button */}
+      <div className="fixed top-4 left-4 z-50 md:hidden">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2 bg-black rounded-lg text-white shadow-lg"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {isMobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className="fixed left-4 top-4 bottom-4 w-64 bg-black rounded-3xl z-40 shadow-2xl border border-gray-800/20">
+      <div className={`fixed left-4 top-4 bottom-4 w-64 bg-black rounded-3xl z-40 shadow-2xl border border-gray-800/20 transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static md:block`}>
         <div className="p-6 h-full flex flex-col">
           {/* App Icon */}
           <div className="flex items-center mb-6">
@@ -107,7 +132,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <header className="fixed top-0 left-72 right-0 bg-white/90 backdrop-blur-xl border-b border-gray-100/50 z-50 transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-b border-gray-100/50 z-50 transition-all duration-300 md:left-72">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3 group">
@@ -142,7 +167,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="pt-16 relative ml-72">
+      <main className="pt-16 relative md:ml-72">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="pt-24 pb-20 text-center relative">
             <div className="fade-in opacity-0 translate-y-8">
@@ -151,7 +176,7 @@ export default function HomePage() {
                 Trusted by modern IT organizations
               </div>
 
-              <h1 className="text-6xl md:text-8xl font-bold text-gray-900 mb-8 leading-[0.9] tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-gray-900 mb-8 leading-[0.9] tracking-tight">
                 IT Asset Management
                 <br />
                 <span className="bg-gradient-to-r from-gray-600 to-gray-400 bg-clip-text text-transparent">
@@ -159,7 +184,7 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed font-light">
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed font-light">
                 Comprehensive hardware tracking, user management, and asset
                 monitoring for modern IT organizations. Keep track of every
                 device, every user, every detail.
@@ -250,13 +275,13 @@ export default function HomePage() {
 
           <div className="py-24">
             <div className="fade-in opacity-0 translate-y-8">
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-[2rem] p-16 text-center relative overflow-hidden">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-[2rem] p-8 sm:p-12 md:p-16 text-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5"></div>
                 <div className="relative">
-                  <h2 className="text-5xl font-bold text-gray-900 mb-6">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                     Ready to Get Started?
                   </h2>
-                  <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+                  <p className="text-lg sm:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
                     Join organizations already using our IT Asset Management
                     system to streamline their operations.
                   </p>
@@ -280,10 +305,10 @@ export default function HomePage() {
           <div className="py-24">
             <div className="fade-in opacity-0 translate-y-8">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                   See It In Action
                 </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                   Watch how our IT Asset Management system transforms your
                   organization's asset tracking and monitoring capabilities in
                   just minutes.
@@ -377,7 +402,7 @@ export default function HomePage() {
         </div>
       </main>
 
-      <footer className="border-t border-gray-100 py-16 bg-gray-50/50 ml-72">
+      <footer className="border-t border-gray-100 py-16 bg-gray-50/50 md:ml-72">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <div className="flex items-center justify-center space-x-3 mb-6">
             <div className="w-8 h-8 bg-gradient-to-br from-gray-900 to-gray-700 rounded-lg flex items-center justify-center">

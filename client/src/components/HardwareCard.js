@@ -244,7 +244,7 @@ const HardwareCard = ({ hardware, onClick }) => {
 
   return (
     <div
-      className={`${assetConfig.cardBg} rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 cursor-pointer border ${assetConfig.borderColor} ${assetConfig.hoverBorderColor} h-80 flex flex-col hover:scale-[1.02]`}
+      className={`${assetConfig.cardBg} rounded-lg shadow-md p-4 sm:p-6 hover:shadow-lg transition-all duration-300 cursor-pointer border ${assetConfig.borderColor} ${assetConfig.hoverBorderColor} h-80 flex flex-col hover:scale-[1.02]`}
       onClick={() => onClick && onClick(hardware)}
     >
       {/* Header */}
@@ -254,11 +254,11 @@ const HardwareCard = ({ hardware, onClick }) => {
             <AssetIcon className={`h-6 w-6 ${assetConfig.iconColor}`} />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-gray-900">
+            <h3 className="text-sm sm:text-base font-semibold text-gray-900">
               {hardware.system?.hostname || "Unknown Device"}
             </h3>
             <div className="flex items-center space-x-2">
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500">
                 {hardware.system?.platform} {hardware.system?.platform_release}
               </p>
               {hardware.asset_info?.category && (
@@ -271,20 +271,20 @@ const HardwareCard = ({ hardware, onClick }) => {
         </div>
         <div className="text-right">
           <p className="text-xs text-gray-500">MAC Address</p>
-          <p className="text-sm font-mono text-gray-700">
+          <p className="text-xs sm:text-sm font-mono text-gray-700">
             {hardware.system?.mac_address || "Unknown"}
           </p>
         </div>
       </div>
 
       {/* Quick Stats Grid */}
-      <div className="grid grid-cols-2 gap-4 mb-4 flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 flex-1">
         {/* CPU - Real-time if available */}
         <div className="flex items-center space-x-2">
           <Cpu className="h-4 w-4 text-gray-600" />
           <div className="min-w-0 flex-1">
             <p className="text-xs text-gray-500">CPU</p>
-            <p className="text-sm font-medium text-gray-900 truncate">
+            <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">
               {hardware.cpu?.name?.split(" ").slice(-2).join(" ") || "Unknown"}
             </p>
             {telemetryData?.current_data?.cpu_percent !== undefined ? (
@@ -309,7 +309,7 @@ const HardwareCard = ({ hardware, onClick }) => {
           <MemoryStick className="h-4 w-4 text-gray-600" />
           <div className="min-w-0 flex-1">
             <p className="text-xs text-gray-500">Memory</p>
-            <p className="text-sm font-medium text-gray-900">
+            <p className="text-xs sm:text-sm font-medium text-gray-900">
               {hardware.memory?.total || "0 GB"}
             </p>
             {telemetryData?.current_data?.ram_percent !== undefined ? (
@@ -338,7 +338,7 @@ const HardwareCard = ({ hardware, onClick }) => {
           <HardDrive className="h-4 w-4 text-gray-600" />
           <div className="min-w-0 flex-1">
             <p className="text-xs text-gray-500">Storage</p>
-            <p className="text-sm font-medium text-gray-900">
+            <p className="text-xs sm:text-sm font-medium text-gray-900">
               {hardware.storage?.total_capacity || "0 GB"}
             </p>
             {telemetryData?.current_data?.storage_percent !== undefined ? (
@@ -405,7 +405,7 @@ const HardwareCard = ({ hardware, onClick }) => {
               e.stopPropagation();
               onClick && onClick(hardware);
             }}
-            className={`flex items-center space-x-1 text-xs ${assetConfig.iconColor} hover:opacity-80 transition-all duration-200 px-2 py-1 rounded-md ${assetConfig.bgColor} hover:shadow-sm`}
+            className={`flex items-center space-x-1 text-xs sm:text-sm ${assetConfig.iconColor} hover:opacity-80 transition-all duration-200 px-2 py-1 sm:px-3 sm:py-2 rounded-md ${assetConfig.bgColor} hover:shadow-sm min-h-[44px]`}
           >
             <Eye className="h-3 w-3" />
             <span>View Details</span>

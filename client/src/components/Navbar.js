@@ -78,11 +78,12 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none"
+                className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none p-2 rounded-md hover:bg-gray-100"
               >
                 <div className="h-8 w-8 bg-gray-300 rounded-full flex items-center justify-center">
                   <User className="h-4 w-4" />
                 </div>
+                <span className="hidden sm:inline">Profile</span>
               </button>
 
               {isDropdownOpen && (
@@ -146,8 +147,37 @@ const Navbar = () => {
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
-              {/* Mobile navigation links can be added here in the future */}
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200 bg-white">
+              <Link
+                href="/dashboard"
+                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/my-assets"
+                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                My Assets
+              </Link>
+              <Link
+                href="/profile"
+                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Profile
+              </Link>
+              {user?.role === "admin" && (
+                <Link
+                  href="/admin"
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Admin Panel
+                </Link>
+              )}
             </div>
           </div>
         )}
